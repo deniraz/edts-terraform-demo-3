@@ -31,7 +31,7 @@ variable "instance_type" {
 variable "ssh_cidr" {
   type        = string
   description = "CIDR allowed to SSH to EC2 (demo only)."
-  default     = "0.0.0.0/0"
+  default     = "8.8.8.8/32"
 }
 
 variable "tags" {
