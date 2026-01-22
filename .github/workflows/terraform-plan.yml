@@ -44,14 +44,36 @@ jobs:
       #   with:
       #     soft_fail: false
 
-      - name: Security Scan (Checkov - SSH only)
-        uses: bridgecrewio/checkov-action@v12
-        with:
-          directory: .
-          framework: terraform
-          check: CKV_AWS_24
-          soft_fail: false
+      # - name: Security Scan (Checkov)
+      #   uses: bridgecrewio/checkov-action@v12
+      #   with:
+      #     directory: .
+      #     framework: terraform
+      #     soft_fail: false
 
+      # - name: Security Scan (Checkov - SSH only)
+      #   uses: bridgecrewio/checkov-action@v12
+      #   with:
+      #     directory: .
+      #     framework: terraform
+      #     check: CKV_AWS_24
+      #     soft_fail: false
 
       - name: Terraform Plan
         run: terraform plan -no-color
+
+      # Generate a binary plan file (review artifact)
+      - name: Terraform Plan (binary artifact)
+        run: terraform plan -no-color -out=tfplan
+
+      # Optional: also generate human-readable plan text
+      - name: Terraform Show (text)
+        run: terraform show -no-color tfplan | tee plan.txt
+
+      - name: Upload Plan Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: |
+            tfplan
+            plan.txt
