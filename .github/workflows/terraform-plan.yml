@@ -38,6 +38,11 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate -no-color
+      
+      - name: Security Scan (tfsec)
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          soft_fail: false
 
       - name: Terraform Plan
         run: terraform plan -no-color
