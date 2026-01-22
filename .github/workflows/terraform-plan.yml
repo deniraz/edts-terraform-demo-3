@@ -39,9 +39,11 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
       
-      - name: Security Scan (tfsec)
-        uses: aquasecurity/tfsec-action@v1.0.3
+      - name: Security Scan (Checkov)
+        uses: bridgecrewio/checkov-action@v12
         with:
+          directory: .
+          framework: terraform
           soft_fail: false
 
       - name: Terraform Plan
